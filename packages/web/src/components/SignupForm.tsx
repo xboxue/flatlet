@@ -5,18 +5,19 @@ import { GraphQLError } from 'graphql';
 import { Button, View } from 'react-native';
 import * as Yup from 'yup';
 import { useSignupMutation } from '../graphql/generated';
-import TextField from './TextField';
+import { TextField } from './TextField';
 
-interface Values {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-}
-
+type Values = typeof initialValues;
 interface GraphQLValidationError extends GraphQLError {
   validationErrors: ValidationError[];
 }
+
+const initialValues = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: ''
+};
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -36,7 +37,7 @@ const SignupSchema = Yup.object().shape({
     .required('Required')
 });
 
-export default () => {
+export const SignupForm = () => {
   const useSignup = useSignupMutation();
 
   const getValidationErrors = (validationError: GraphQLValidationError) => {
@@ -76,12 +77,7 @@ export default () => {
 
   return (
     <Formik
-      initialValues={{
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: ''
-      }}
+      initialValues={initialValues}
       validationSchema={SignupSchema}
       onSubmit={handleSubmit}
     >

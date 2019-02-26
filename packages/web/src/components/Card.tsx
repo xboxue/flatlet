@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { ListingsQueryListings } from '../graphql/generated';
 
-export default (props: ListingsQueryListings) => {
+export const Card = (props: ListingsQueryListings) => {
   return (
     <PostWrapper>
       <UserName>{props.user.name}</UserName>

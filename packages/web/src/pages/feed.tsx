@@ -1,6 +1,6 @@
 import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
-import Card from '../components/Card';
+import { Card } from '../components/Card';
 import { useListingsQuery } from '../graphql/generated';
 
 export default () => {

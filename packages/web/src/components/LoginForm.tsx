@@ -4,13 +4,13 @@ import Router from 'next/router';
 import { Button, Text, View } from 'react-native';
 import * as Yup from 'yup';
 import { useLoginMutation } from '../graphql/generated';
-import TextField from './TextField';
+import { TextField } from './TextField';
 
 interface Values {
   email: string;
   password: string;
 }
-export default () => {
+export const LoginForm = () => {
   const useLogin = useLoginMutation();
 
   const handleSubmit = async (

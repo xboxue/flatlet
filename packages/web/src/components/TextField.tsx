@@ -2,7 +2,11 @@ import { FieldProps } from 'formik';
 import { Text } from 'react-native';
 import styled from 'styled-components/native';
 
-export default ({ field, form: { touched, errors }, ...props }: FieldProps) => (
+export const TextField = ({
+  field,
+  form: { touched, errors },
+  ...props
+}: FieldProps) => (
   <InputWrapper>
     <Input {...field} {...props} />
     {touched[field.name] && errors[field.name] && (
