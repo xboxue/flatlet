@@ -5,24 +5,16 @@ import Document, {
   NextScript
 } from 'next/document';
 import React from 'react';
-import { AppRegistry } from 'react-native';
-import { ServerStyleSheet } from 'styled-components';
+import { AppRegistry } from 'react-native-web';
 
-interface Props {
-  styleTags: Array<React.ReactElement<{}>>;
-}
-
-export default class MyDocument extends Document<Props> {
+export default class MyDocument extends Document {
   static async getInitialProps({ renderPage }: NextDocumentContext) {
     AppRegistry.registerComponent('Main', () => Main);
+    const { getStyleElement } = AppRegistry.getApplication('Main');
+    const page = renderPage();
+    const styles = [getStyleElement()];
 
-    const sheet = new ServerStyleSheet();
-    const page = renderPage(App => props =>
-      sheet.collectStyles(<App {...props} />)
-    );
-    const styleTags = sheet.getStyleElement();
-
-    return { ...page, styleTags };
+    return { ...page, styles: React.Children.toArray(styles) };
   }
 
   render() {
@@ -30,7 +22,6 @@ export default class MyDocument extends Document<Props> {
       <html>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
-          {this.props.styleTags}
         </Head>
         <body>
           <Main />

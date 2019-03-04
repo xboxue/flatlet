@@ -1,25 +1,25 @@
 import { FieldProps } from 'formik';
-import { Text } from 'react-native';
-import styled from 'styled-components/native';
+import { StyleSheet, Text, TextInput, View } from 'react-native';
 
 export const TextField = ({
   field,
   form: { touched, errors },
   ...props
 }: FieldProps) => (
-  <InputWrapper>
-    <Input {...field} {...props} />
+  <View style={styles.container}>
+    <TextInput style={styles.textInput} {...field} {...props} />
     {touched[field.name] && errors[field.name] && (
       <Text>{errors[field.name]}</Text>
     )}
-  </InputWrapper>
+  </View>
 );
 
-const Input = styled.TextInput`
-  border: 1px;
-  padding: 10px 10px 10px 10px;
-`;
-
-const InputWrapper = styled.View`
-  margin-bottom: 10px;
-`;
+const styles = StyleSheet.create({
+  textInput: {
+    borderWidth: 1,
+    padding: 10
+  },
+  container: {
+    marginBottom: 10
+  }
+});
