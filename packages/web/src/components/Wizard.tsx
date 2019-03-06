@@ -2,12 +2,12 @@ import { Formik, FormikActions, FormikErrors } from 'formik';
 import React, { useState } from 'react';
 import { Button, View } from 'react-native';
 
-interface ChildProps<Values> {
-  validate?: (values: Values) => void | object | Promise<FormikErrors<Values>>;
+export interface PageProps<Values> {
+  validate?: (values: Values) => FormikErrors<Values>;
 }
 
 interface Props<Values> {
-  children: React.ReactElement<ChildProps<Values>>[];
+  children: React.ReactElement<PageProps<Values>>[];
   onSubmit: (values: Values, formikActions: FormikActions<Values>) => void;
   initialValues: Values;
 }

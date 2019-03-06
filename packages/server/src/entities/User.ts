@@ -27,10 +27,6 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Field(type => [Listing])
-  @OneToMany(type => Listing, listing => listing.user)
-  listings: Listing[];
-
   @Field()
   name(@Root() parent: User): string {
     return `${parent.firstName} ${parent.lastName}`;
@@ -41,4 +37,7 @@ export class User extends BaseEntity {
 
   @Column({ default: false })
   confirmed: boolean;
+
+  @OneToMany(type => Listing, listing => listing.user)
+  listings: Listing[];
 }

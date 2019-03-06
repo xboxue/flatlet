@@ -1,9 +1,14 @@
-import { Field } from 'formik';
-import { View } from 'react-native';
-import { TextField } from './TextField';
+import { Text, View } from 'react-native';
+import { CheckBoxInput } from './CheckBox/CheckBoxInput';
 
 export const AmenitiesForm = () => (
   <View>
-    <Field name="amenities" component={TextField} placeholder="" />
+    <Text>Amenities</Text>
+    <CheckBoxInput name="amenities" value="Wifi" />
+    <CheckBoxInput name="amenities" value="A/C" />
+    <CheckBoxInput name="amenities" value="Balcony" />
+    <CheckBoxInput name="amenities" value="Parking" />
+    <CheckBoxInput name="amenities" value="Furnished" />
+    <CheckBoxInput name="amenities" value="Ensuite Laundry" />
   </View>
 );

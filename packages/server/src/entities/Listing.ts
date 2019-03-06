@@ -3,9 +3,12 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
   ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn
 } from 'typeorm';
+import { Amenities } from './Amenities';
 import { User } from './User';
 
 @ObjectType()
@@ -17,25 +20,48 @@ export class Listing extends BaseEntity {
 
   @Field()
   @Column()
-  title: string;
+  homeType: string;
 
   @Field()
   @Column()
-  description: string;
+  ownerType: string;
 
   @Field()
   @Column()
-  imageUrl: string;
+  address: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  unit?: string;
 
   @Field()
   @Column()
-  location: string;
+  bedrooms: number;
+
+  @Field()
+  @Column()
+  bathrooms: number;
+
+  @Field()
+  @Column()
+  sqft: number;
 
   @Field()
   @Column()
   price: number;
 
-  @Field(type => User)
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  imageUrl?: string;
+
   @ManyToOne(type => User, user => user.listings)
   user: User;
+
+  @OneToOne(type => Amenities)
+  @JoinColumn()
+  amenities: Amenities;
 }

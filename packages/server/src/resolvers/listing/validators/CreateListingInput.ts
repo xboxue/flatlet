@@ -1,20 +1,38 @@
-import { Field, InputType, Int } from 'type-graphql';
+import { Field, InputType } from 'type-graphql';
 import { Listing } from '../../../entities/Listing';
 
 @InputType()
 export class CreateListingInput implements Partial<Listing> {
   @Field()
-  title: string;
+  homeType: string;
 
   @Field()
-  description: string;
+  ownerType: string;
 
   @Field()
-  imageUrl: string;
+  address: string;
+
+  @Field({ nullable: true })
+  unit?: string;
 
   @Field()
-  location: string;
+  bedrooms: number;
 
-  @Field(type => Int)
+  @Field()
+  bathrooms: number;
+
+  @Field()
+  sqft: number;
+
+  @Field()
   price: number;
+
+  @Field({ nullable: true })
+  description?: string;
+
+  @Field({ nullable: true })
+  imageUrl?: string;
+
+  // @Field()
+  // amenities: Amenities;
 }
