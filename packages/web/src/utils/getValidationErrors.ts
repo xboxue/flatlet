@@ -3,7 +3,11 @@ import { ValidationError } from 'class-validator';
 import { GraphQLError } from 'graphql';
 
 interface GraphQLValidationError extends GraphQLError {
-  validationErrors: ValidationError[];
+  extensions: {
+    exception: {
+      validationErrors: ValidationError[];
+    };
+  };
 }
 
 export const getValidationErrors = (error: any) => {
@@ -11,15 +15,15 @@ export const getValidationErrors = (error: any) => {
 
   const validationError = error.graphQLErrors.find(
     child => child.message === 'Argument Validation Error'
-  );
+  ) as GraphQLValidationError;
 
   if (!validationError) throw error;
 
-  return getErrors(validationError as GraphQLValidationError);
+  return getErrors(validationError.extensions.exception.validationErrors);
 };
 
-const getErrors = (validationError: GraphQLValidationError) => {
-  return validationError.validationErrors.reduce((errors, error) => {
+const getErrors = (validationErrors: ValidationError[]) => {
+  return validationErrors.reduce((errors, error) => {
     // Display one error at a time
     return {
       ...errors,

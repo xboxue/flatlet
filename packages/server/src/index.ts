@@ -3,7 +3,7 @@ import connectRedis from 'connect-redis';
 import express from 'express';
 import session from 'express-session';
 import 'reflect-metadata';
-import { buildSchema, formatArgumentValidationError } from 'type-graphql';
+import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
 import { redis } from './shared/redis';
 import { Context } from './types/Context';
@@ -20,7 +20,6 @@ async function bootstrap() {
 
   const server = new ApolloServer({
     schema,
-    formatError: formatArgumentValidationError,
     context: ({ req }: Context) => ({ req })
   });
 
