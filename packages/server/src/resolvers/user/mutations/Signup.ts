@@ -23,7 +23,7 @@ export class Signup {
     await user.save();
 
     const token = await createToken(user.id);
-    sendEmail(user.email, `http://localhost:3000/user/verify/${token}`);
+    sendEmail(user.email, `http://localhost:3000/confirm-user?token=${token}`);
 
     return user;
   }
