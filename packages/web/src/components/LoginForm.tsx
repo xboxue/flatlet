@@ -3,7 +3,7 @@ import { Field, Formik, FormikActions } from 'formik';
 import Router from 'next/router';
 import { Button, Text, View } from 'react-native';
 import * as Yup from 'yup';
-import { useLoginMutation } from '../graphql/generated';
+import { useLogin } from '../graphql/types';
 import { TextField } from './TextField';
 
 interface Values {
@@ -11,20 +11,19 @@ interface Values {
   password: string;
 }
 export const LoginForm = () => {
-  const useLogin = useLoginMutation();
+  const login = useLogin();
 
   const handleSubmit = async (
     values: Values,
     { setStatus, setSubmitting }: FormikActions<Values>
   ) => {
     try {
-      await useLogin({ variables: values });
-      setSubmitting(false);
+      await login({ variables: values });
       Router.push('/feed');
     } catch (error) {
       if (!(error instanceof ApolloError)) throw error;
-
       setStatus({ login: 'Invalid email or password' });
+    } finally {
       setSubmitting(false);
     }
   };
@@ -41,7 +40,12 @@ export const LoginForm = () => {
       {({ submitForm, status }) => (
         <View>
           <Field name="email" component={TextField} placeholder="Email" />
-          <Field name="password" component={TextField} placeholder="Password" />
+          <Field
+            name="password"
+            component={TextField}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
 
           {status && status.login && <Text>{status.login}</Text>}
           <Button onPress={submitForm} title="Submit" />

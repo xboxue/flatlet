@@ -1,16 +1,11 @@
-import { ApolloError } from 'apollo-client';
-import { ValidationError } from 'class-validator';
 import { Field, Formik, FormikActions } from 'formik';
-import { GraphQLError } from 'graphql';
 import { Button, View } from 'react-native';
 import * as Yup from 'yup';
-import { useSignupMutation } from '../graphql/generated';
+import { useSignup } from '../graphql/types';
+import { getValidationErrors } from '../utils/getValidationErrors';
 import { TextField } from './TextField';
 
 type Values = typeof initialValues;
-interface GraphQLValidationError extends GraphQLError {
-  validationErrors: ValidationError[];
-}
 
 const initialValues = {
   firstName: '',
@@ -38,39 +33,17 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const SignupForm = () => {
-  const useSignup = useSignupMutation();
-
-  const getValidationErrors = (validationError: GraphQLValidationError) => {
-    return validationError.validationErrors.reduce((errors, error) => {
-      // Display one error at a time
-      return {
-        ...errors,
-        [error.property]: Object.values(error.constraints)[0]
-      };
-    }, {});
-  };
+  const signup = useSignup();
 
   const handleSubmit = async (
     values: Values,
     { setErrors, setSubmitting }: FormikActions<Values>
   ) => {
     try {
-      await useSignup({ variables: { data: values } });
-      setSubmitting(false);
+      await signup({ variables: { data: values } });
     } catch (error) {
-      if (!(error instanceof ApolloError)) throw error;
-
-      const validationError = error.graphQLErrors.find(
-        child => child.message === 'Argument Validation Error'
-      );
-
-      if (!validationError) throw error;
-
-      const errors = getValidationErrors(
-        validationError as GraphQLValidationError
-      );
-
-      setErrors(errors);
+      setErrors(getValidationErrors(error));
+    } finally {
       setSubmitting(false);
     }
   };
@@ -94,7 +67,12 @@ export const SignupForm = () => {
             placeholder="Last Name"
           />
           <Field name="email" component={TextField} placeholder="Email" />
-          <Field name="password" component={TextField} placeholder="Password" />
+          <Field
+            name="password"
+            component={TextField}
+            placeholder="Password"
+            secureTextEntry={true}
+          />
 
           <Button onPress={submitForm} title="Submit" />
         </View>
