@@ -3,12 +3,14 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn
 } from 'typeorm';
-import { Amenities } from './Amenities';
+import { Amenity } from './Amenity';
+import { Photo } from './Photo';
 import { User } from './User';
 
 @ObjectType()
@@ -54,14 +56,15 @@ export class Listing extends BaseEntity {
   @Column({ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  imageUrl?: string;
+  @Field(type => [Photo])
+  @OneToMany(type => Photo, photo => photo.listing)
+  photos: Photo[];
+
+  @Field(type => [Amenity])
+  @ManyToMany(type => Amenity)
+  @JoinTable()
+  amenities: Amenity[];
 
   @ManyToOne(type => User, user => user.listings)
   user: User;
-
-  @OneToOne(type => Amenities)
-  @JoinColumn()
-  amenities: Amenities;
 }

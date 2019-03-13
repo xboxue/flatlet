@@ -4,9 +4,9 @@ import { createToken } from '../../../utils/createToken';
 import { sendEmail } from '../../../utils/sendEmail';
 
 @Resolver()
-export class ForgotPassword {
+export class SendPasswordResetEmail {
   @Mutation(returns => Boolean)
-  async forgotPassword(@Arg('email') email: string): Promise<boolean> {
+  async sendPasswordResetEmail(@Arg('email') email: string): Promise<boolean> {
     const user = await User.findOne({ email });
 
     if (!user) {

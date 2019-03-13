@@ -8,7 +8,7 @@ import { SignupInput } from '../validators/SignupInput';
 @Resolver()
 export class Signup {
   @Mutation(returns => User)
-  async signup(@Arg('data')
+  async signup(@Arg('input')
   {
     password,
     ...signupInput

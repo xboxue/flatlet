@@ -1,8 +1,7 @@
 import { Field, InputType } from 'type-graphql';
-import { Listing } from '../../../entities/Listing';
 
 @InputType()
-export class CreateListingInput implements Partial<Listing> {
+export class CreateListingInput {
   @Field()
   homeType: string;
 
@@ -33,6 +32,6 @@ export class CreateListingInput implements Partial<Listing> {
   @Field({ nullable: true })
   imageUrl?: string;
 
-  // @Field()
-  // amenities: Amenities;
+  @Field(type => [String])
+  amenities: string[];
 }

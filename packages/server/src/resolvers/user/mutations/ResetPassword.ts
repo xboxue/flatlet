@@ -9,7 +9,7 @@ import { ResetPasswordInput } from '../validators/ResetPasswordInput';
 export class ResetPassword {
   @Mutation(returns => User, { nullable: true })
   async resetPassword(
-    @Arg('data')
+    @Arg('input')
     { token, password }: ResetPasswordInput,
     @Ctx() { req }: Context
   ): Promise<User> {
