@@ -1,3 +1,4 @@
-import { ListingForm } from '../components/ListingForm';
+import { ListingForm } from 'src/components/ListingForm';
+import { withAuth } from 'src/utils/withAuth';
 
-export default () => <ListingForm />;
+export default withAuth(ListingForm);

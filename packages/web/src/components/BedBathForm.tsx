@@ -1,9 +1,9 @@
 import { Field } from 'formik';
 import { Text, View } from 'react-native';
-import { ListingFormPageProps } from './ListingForm';
 import { TextField } from './TextField';
+import { PageProps } from './Wizard';
 
-export const BedBathForm = (props: ListingFormPageProps) => (
+export const BedBathForm = (props: PageProps) => (
   <View>
     <Text>Property Information</Text>
     <Field name="bedrooms" component={TextField} placeholder="Bedrooms" />

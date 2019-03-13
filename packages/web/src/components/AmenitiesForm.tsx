@@ -1,7 +1,8 @@
 import { Text, View } from 'react-native';
 import { CheckBoxInput } from './CheckBox/CheckBoxInput';
+import { PageProps } from './Wizard';
 
-export const AmenitiesForm = () => (
+export const AmenitiesForm = (props: PageProps) => (
   <View>
     <Text>Amenities</Text>
     <CheckBoxInput name="amenities" value="Wifi" />

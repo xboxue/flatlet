@@ -4,11 +4,12 @@ import { createHttpLink } from 'apollo-link-http';
 import withApollo from 'next-with-apollo';
 
 export default withApollo(
-  ({ initialState }) =>
+  ({ headers, initialState }) =>
     new ApolloClient({
       link: createHttpLink({
         uri: 'http://localhost:4000/graphql',
-        credentials: 'include'
+        credentials: 'include',
+        headers
       }),
       cache: new InMemoryCache().restore(initialState || {})
     })

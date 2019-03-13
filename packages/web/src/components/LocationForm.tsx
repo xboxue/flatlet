@@ -1,9 +1,9 @@
 import { Field } from 'formik';
 import { Text, View } from 'react-native';
-import { ListingFormPageProps } from './ListingForm';
 import { TextField } from './TextField';
+import { PageProps } from './Wizard';
 
-export const LocationForm = (props: ListingFormPageProps) => (
+export const LocationForm = (props: PageProps) => (
   <View>
     <Text>Address</Text>
     <Field

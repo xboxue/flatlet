@@ -1,35 +1,51 @@
-import { Formik, FormikActions, FormikErrors } from 'formik';
-import React, { useState } from 'react';
+import { Formik, FormikActions } from 'formik';
+import Router from 'next/router';
+import React from 'react';
 import { Button, View } from 'react-native';
 
-export interface PageProps<Values> {
-  validate?: (values: Values) => FormikErrors<Values>;
+export interface PageProps {
+  validationSchema?: any;
+  id: string;
 }
 
 interface Props<Values> {
-  children: React.ReactElement<PageProps<Values>>[];
-  onSubmit: (values: Values, formikActions: FormikActions<Values>) => void;
+  children: React.ReactElement<PageProps>[];
   initialValues: Values;
+  id: string;
+  path: string;
+  onSubmit: (values: Values, formikActions: FormikActions<Values>) => void;
 }
 
 export function Wizard<Values>(props: Props<Values>) {
-  const [page, setPage] = useState(0);
-  const [values, setValues] = useState(props.initialValues);
+  const pages = React.Children.toArray(props.children);
+  const pageMap: { [id: string]: React.ReactElement<PageProps> } = pages.reduce(
+    (acc, page) => {
+      return {
+        ...acc,
+        [page.props.id]: page
+      };
+    },
+    {}
+  );
 
-  const activePage = React.Children.toArray(props.children)[page];
-  const isLastPage = page === React.Children.count(props.children) - 1;
+  const activePage = pageMap[props.id];
+  const activeIndex = pages.findIndex(page => page === activePage);
 
-  const next = (formValues: Values) => {
-    setPage(Math.min(page + 1, React.Children.count(props.children) - 1));
-    setValues(formValues);
+  const isLastPage = activePage === pages[pages.length - 1];
+  const isFirstPage = activePage === pages[0];
+
+  const next = () => {
+    Router.push(
+      `${props.path}?id=${pages[activeIndex + 1].props.id}`,
+      `${props.path}/${pages[activeIndex + 1].props.id}`
+    );
   };
 
-  const previous = () => setPage(Math.max(page - 1, 0));
-
-  const validate = (formValues: Values) => {
-    return activePage.props.validate
-      ? activePage.props.validate(formValues)
-      : {};
+  const previous = () => {
+    Router.push(
+      `${props.path}?id=${pages[activeIndex - 1].props.id}`,
+      `${props.path}/${pages[activeIndex - 1].props.id}`
+    );
   };
 
   const handleSubmit = (formValues: Values, bag: FormikActions<Values>) => {
@@ -38,16 +54,20 @@ export function Wizard<Values>(props: Props<Values>) {
     }
     bag.setTouched({});
     bag.setSubmitting(false);
-    next(formValues);
+    next();
   };
 
   return (
-    <Formik initialValues={values} onSubmit={handleSubmit} validate={validate}>
+    <Formik
+      initialValues={props.initialValues}
+      onSubmit={handleSubmit}
+      validationSchema={activePage.props.validationSchema}
+    >
       {({ submitForm }) => (
         <View>
           {activePage}
           <View>
-            {page > 0 && <Button onPress={previous} title="Previous" />}
+            {!isFirstPage && <Button onPress={previous} title="Previous" />}
             {!isLastPage && <Button onPress={submitForm} title="Next" />}
             {isLastPage && <Button onPress={submitForm} title="Submit" />}
           </View>

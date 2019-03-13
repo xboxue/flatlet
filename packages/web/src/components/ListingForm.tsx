@@ -1,15 +1,16 @@
-import { FormikActions, FormikErrors } from 'formik';
+import { FormikActions } from 'formik';
+import { withRouter } from 'next/router';
 import React from 'react';
-import { useCreateListing } from '../graphql/types';
-import { getValidationErrors } from '../utils/getValidationErrors';
+import { useCreateListing } from 'src/graphql/types';
+import { getValidationErrors } from 'src/utils/getValidationErrors';
+import * as Yup from 'yup';
 import { AmenitiesForm } from './AmenitiesForm';
 import { BedBathForm } from './BedBathForm';
 import { LocationForm } from './LocationForm';
 import { PropertyForm } from './PropertyForm';
-import { PageProps, Wizard } from './Wizard';
+import { Wizard } from './Wizard';
 
 type Values = typeof initialValues;
-export type ListingFormPageProps = PageProps<Values>;
 
 const initialValues = {
   homeType: '',
@@ -23,22 +24,53 @@ const initialValues = {
   amenities: [] as string[]
 };
 
-export const ListingForm = () => {
+const PropertySchema = Yup.object().shape({
+  homeType: Yup.string().required('Required'),
+  ownerType: Yup.string().required('Required')
+});
+
+const BedSchema = Yup.object().shape({
+  bedrooms: Yup.number()
+    .typeError('Please enter a number')
+    .required('Required')
+    .positive()
+    .integer(),
+  bathrooms: Yup.number()
+    .typeError('Please enter a number')
+    .required('Required')
+    .positive()
+    .integer(),
+  sqft: Yup.number()
+    .typeError('Please enter a number')
+    .required('Required')
+    .positive()
+    .integer()
+});
+
+export const ListingForm = withRouter(({ router }) => {
   const createListing = useCreateListing();
 
+  const id =
+    router && router.query && router.query.id
+      ? (router.query.id as string)
+      : '';
+
   const handleSubmit = async (
-    { bedrooms, bathrooms, sqft, price, amenities, ...rest }: Values,
+    { bedrooms, bathrooms, sqft, price, ...rest }: Values,
     { setErrors, setSubmitting }: FormikActions<Values>
   ) => {
     try {
-      const values = {
-        bedrooms: +bedrooms,
-        bathrooms: +bathrooms,
-        sqft: +sqft,
-        price: +price,
-        ...rest
-      };
-      await createListing({ variables: { data: values } });
+      await createListing({
+        variables: {
+          input: {
+            bedrooms: +bedrooms,
+            bathrooms: +bathrooms,
+            sqft: +sqft,
+            price: +price,
+            ...rest
+          }
+        }
+      });
     } catch (error) {
       setErrors(getValidationErrors(error));
     } finally {
@@ -47,27 +79,16 @@ export const ListingForm = () => {
   };
 
   return (
-    <Wizard initialValues={initialValues} onSubmit={handleSubmit}>
-      <PropertyForm />
-      <BedBathForm
-        validate={values => {
-          const errors: FormikErrors<Values> = {};
-          if (!values.bedrooms) {
-            errors.bedrooms = 'Required';
-          }
-          return errors;
-        }}
-      />
-      <LocationForm
-        validate={values => {
-          const errors: FormikErrors<Values> = {};
-          if (!values.address) {
-            errors.address = 'Required';
-          }
-          return errors;
-        }}
-      />
-      <AmenitiesForm />
+    <Wizard
+      initialValues={initialValues}
+      onSubmit={handleSubmit}
+      path="/new-listing"
+      id={id}
+    >
+      <PropertyForm id="property" validationSchema={PropertySchema} />
+      <BedBathForm id="beds-and-baths" validationSchema={BedSchema} />
+      <LocationForm id="location" />
+      <AmenitiesForm id="amenities" />
     </Wizard>
   );
-};
+});
