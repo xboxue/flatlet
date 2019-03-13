@@ -1,7 +1,7 @@
 import ApolloClient from 'apollo-client';
 import App, { Container } from 'next/app';
 import { ApolloProvider } from 'react-apollo-hooks';
-import withApollo from '../lib/withApollo';
+import withApollo from 'src/lib/withApollo';
 
 interface Props {
   apollo: ApolloClient<any>;

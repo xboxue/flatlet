@@ -2,8 +2,8 @@ import { ApolloError } from 'apollo-client';
 import { Field, Formik, FormikActions } from 'formik';
 import Router from 'next/router';
 import { Button, Text, View } from 'react-native';
+import { useLogin } from 'src/graphql/types';
 import * as Yup from 'yup';
-import { useLogin } from '../graphql/types';
 import { TextField } from './TextField';
 
 interface Values {

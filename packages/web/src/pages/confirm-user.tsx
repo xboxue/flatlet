@@ -1,7 +1,7 @@
 import { AppContext } from 'next-with-apollo';
 import Router from 'next/router';
-import { ConfirmUserMutation, ConfirmUserVariables } from '../graphql/types';
-import { confirmUserMutation } from '../graphql/user/mutations/confirmUser';
+import { ConfirmUserMutation, ConfirmUserVariables } from 'src/graphql/types';
+import { confirmUserMutation } from 'src/graphql/user/mutations/confirmUser';
 
 const ConfirmUser = () => null;
 

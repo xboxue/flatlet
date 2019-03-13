@@ -1,8 +1,8 @@
 import { Field, Formik, FormikActions } from 'formik';
 import { Button, View } from 'react-native';
+import { useSignup } from 'src/graphql/types';
+import { getValidationErrors } from 'src/utils/getValidationErrors';
 import * as Yup from 'yup';
-import { useSignup } from '../graphql/types';
-import { getValidationErrors } from '../utils/getValidationErrors';
 import { TextField } from './TextField';
 
 type Values = typeof initialValues;
@@ -40,7 +40,7 @@ export const SignupForm = () => {
     { setErrors, setSubmitting }: FormikActions<Values>
   ) => {
     try {
-      await signup({ variables: { data: values } });
+      await signup({ variables: { input: values } });
     } catch (error) {
       setErrors(getValidationErrors(error));
     } finally {
