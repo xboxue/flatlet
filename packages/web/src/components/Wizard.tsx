@@ -28,7 +28,7 @@ export function Wizard<Values>(props: Props<Values>) {
     {}
   );
 
-  const activePage = pageMap[props.id];
+  const activePage = pageMap[props.id] ? pageMap[props.id] : pages[0];
   const activeIndex = pages.findIndex(page => page === activePage);
 
   const isLastPage = activePage === pages[pages.length - 1];
