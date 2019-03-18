@@ -1,14 +1,13 @@
-import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from 'type-graphql';
+import { Arg, Authorized, Ctx, Mutation, Resolver } from 'type-graphql';
 import { Amenity } from '../../../entities/Amenity';
 import { Listing } from '../../../entities/Listing';
-import { isAuth } from '../../../middleware/isAuth';
 import { Context } from '../../../types/Context';
 import { CreateListingInput } from '../validators/CreateListingInput';
 
 @Resolver()
 export class CreateListing {
   @Mutation(returns => Listing)
-  @UseMiddleware(isAuth)
+  @Authorized()
   async createListing(
     @Arg('input') { amenities, ...createListingInput }: CreateListingInput,
     @Ctx() { user }: Context

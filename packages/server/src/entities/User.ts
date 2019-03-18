@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType, Root } from 'type-graphql';
+import { Field, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
@@ -24,19 +24,28 @@ export class User extends BaseEntity {
   lastName: string;
 
   @Field()
+  @Column()
+  name: string;
+
+  @Field()
+  @Column({ nullable: true })
+  photoUrl?: string;
+
+  @Field()
   @Column({ unique: true })
   email: string;
 
-  @Field()
-  name(@Root() parent: User): string {
-    return `${parent.firstName} ${parent.lastName}`;
-  }
-
-  @Column({ select: false })
-  password: string;
+  @Column({ nullable: true, select: false })
+  password?: string;
 
   @Column({ default: false })
-  confirmed: boolean;
+  emailVerified: boolean;
+
+  @Column({ nullable: true })
+  googleId?: string;
+
+  @Column({ nullable: true })
+  facebookId?: string;
 
   @OneToMany(type => Listing, listing => listing.user)
   listings: Listing[];

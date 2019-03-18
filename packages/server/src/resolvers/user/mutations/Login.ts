@@ -20,17 +20,17 @@ export class Login {
       .where('user.email = :email', { email })
       .getOne();
 
-    if (!user) {
+    if (!user || !user.password) {
       throw new Error('Incorrect email or password');
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
-    if (!valid || !user.confirmed) {
+    if (!valid || !user.emailVerified) {
       throw new Error('Incorrect email or password');
     }
 
-    req.session!.userId = user.id;
+    req.session!.passport = { user: user.id };
     return user;
   }
 }

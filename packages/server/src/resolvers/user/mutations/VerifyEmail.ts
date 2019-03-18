@@ -3,9 +3,9 @@ import { User } from '../../../entities/User';
 import { redis } from '../../../shared/redis';
 
 @Resolver()
-export class ConfirmUser {
+export class VerifyEmail {
   @Mutation(returns => Boolean)
-  async confirmUser(@Arg('token') token: string): Promise<boolean> {
+  async verifyEmail(@Arg('token') token: string): Promise<boolean> {
     const userId = await redis.get(token);
 
     if (!userId) return false;
@@ -14,7 +14,7 @@ export class ConfirmUser {
 
     if (!user) return false;
 
-    user.confirmed = true;
+    user.emailVerified = true;
     user.save();
     redis.del(token);
     return true;

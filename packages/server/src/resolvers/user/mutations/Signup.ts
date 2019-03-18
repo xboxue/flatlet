@@ -11,19 +11,24 @@ export class Signup {
   async signup(@Arg('input')
   {
     password,
-    ...signupInput
+    firstName,
+    lastName,
+    email
   }: SignupInput): Promise<User> {
     const hash = await bcrypt.hash(password, 12);
 
     const user = User.create({
-      ...signupInput,
-      password: hash
+      password: hash,
+      name: `${firstName} ${lastName}`,
+      firstName,
+      lastName,
+      email
     });
 
     await user.save();
 
     const token = await createToken(user.id);
-    sendEmail(user.email, `http://localhost:3000/confirm-user?token=${token}`);
+    sendEmail(user.email, `http://localhost:3000/verify-email?token=${token}`);
 
     return user;
   }

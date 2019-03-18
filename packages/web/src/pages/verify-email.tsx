@@ -1,11 +1,11 @@
 import { AppContext } from 'next-with-apollo';
 import Router from 'next/router';
-import { ConfirmUserMutation, ConfirmUserVariables } from 'src/graphql/types';
-import { confirmUserMutation } from 'src/graphql/user/mutations/confirmUser';
+import { VerifyEmailMutation, VerifyEmailVariables } from 'src/graphql/types';
+import { verifyEmailMutation } from 'src/graphql/user/mutations/verifyEmail';
 
-const ConfirmUser = () => null;
+const VerifyEmail = () => null;
 
-ConfirmUser.getInitialProps = async ({
+VerifyEmail.getInitialProps = async ({
   query: { token },
   res,
   apolloClient
@@ -13,8 +13,8 @@ ConfirmUser.getInitialProps = async ({
   if (!token) return {};
 
   try {
-    await apolloClient.mutate<ConfirmUserMutation, ConfirmUserVariables>({
-      mutation: confirmUserMutation,
+    await apolloClient.mutate<VerifyEmailMutation, VerifyEmailVariables>({
+      mutation: verifyEmailMutation,
       variables: { token: token as string }
     });
   } catch (error) {
@@ -31,4 +31,4 @@ ConfirmUser.getInitialProps = async ({
   return {};
 };
 
-export default ConfirmUser;
+export default VerifyEmail;

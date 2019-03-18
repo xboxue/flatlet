@@ -1,18 +1,17 @@
 import bcrypt from 'bcrypt';
-import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
+import { Arg, Mutation, Resolver } from 'type-graphql';
 import { User } from '../../../entities/User';
 import { redis } from '../../../shared/redis';
-import { Context } from '../../../types/Context';
 import { ResetPasswordInput } from '../validators/ResetPasswordInput';
 
 @Resolver()
 export class ResetPassword {
   @Mutation(returns => User, { nullable: true })
-  async resetPassword(
-    @Arg('input')
-    { token, password }: ResetPasswordInput,
-    @Ctx() { req }: Context
-  ): Promise<User> {
+  async resetPassword(@Arg('input')
+  {
+    token,
+    password
+  }: ResetPasswordInput): Promise<User> {
     const userId = await redis.get(token);
     if (!userId) {
       throw new Error('Something went wrong');
@@ -28,7 +27,6 @@ export class ResetPassword {
     user.save();
 
     redis.del(token);
-    req.session!.sessionId = user.id;
 
     return user;
   }
