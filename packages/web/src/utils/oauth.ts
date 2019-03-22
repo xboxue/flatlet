@@ -21,7 +21,7 @@ export const getGoogleUrl = () => {
       '274846110399-8sgac0nv65j86018iscmd97p34mmdgs3.apps.googleusercontent.com',
     redirect_uri: 'http://localhost:3000/oauth-callback',
     response_type: 'code',
-    scope: 'profile email',
+    scope: 'openid profile email',
     state: 'provider=google'
   };
 

@@ -3,11 +3,10 @@ import { User } from '../../../entities/User';
 import { Context } from '../../../types/Context';
 import {
   createFacebookUser,
-  findOrCreateUser,
-  getFacebookToken,
-  passportAuthenticate,
-  passportLogin
-} from '../../../utils/passport';
+  getFacebookProfile,
+  getFacebookToken
+} from '../../../utils/auth/facebook';
+import { findOrCreateUser } from '../../../utils/auth/findOrCreateUser';
 
 @Resolver()
 export class LoginFacebook {
@@ -17,18 +16,15 @@ export class LoginFacebook {
     @Ctx() { req }: Context
   ): Promise<User | null> {
     try {
-      const accessToken = await getFacebookToken(code);
-      req.body.access_token = accessToken;
+      const { access_token } = await getFacebookToken(code);
+      req.body.access_token = access_token;
 
-      const { profile, info } = await passportAuthenticate(
-        'facebook-token',
-        req
-      );
-
+      const profile = await getFacebookProfile(access_token);
       const profileUser = createFacebookUser(profile);
+
       const user = await findOrCreateUser(profileUser, 'facebookId');
 
-      await passportLogin(req, user);
+      if (req.session) req.session.userId = user.id;
 
       return user;
     } catch (error) {

@@ -1,13 +1,13 @@
+import { decode } from 'jsonwebtoken';
 import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { User } from '../../../entities/User';
 import { Context } from '../../../types/Context';
+import { findOrCreateUser } from '../../../utils/auth/findOrCreateUser';
 import {
   createGoogleUser,
-  findOrCreateUser,
   getGoogleToken,
-  passportAuthenticate,
-  passportLogin
-} from '../../../utils/passport';
+  GoogleProfile
+} from '../../../utils/auth/google';
 
 @Resolver()
 export class LoginGoogle {
@@ -17,15 +17,15 @@ export class LoginGoogle {
     @Ctx() { req }: Context
   ): Promise<User | null> {
     try {
-      const accessToken = await getGoogleToken(code);
-      req.body.access_token = accessToken;
+      const { id_token, access_token } = await getGoogleToken(code);
+      req.body.access_token = access_token;
 
-      const { profile, info } = await passportAuthenticate('google-token', req);
-
+      const profile = decode(id_token) as GoogleProfile;
       const profileUser = createGoogleUser(profile);
+
       const user = await findOrCreateUser(profileUser, 'googleId');
 
-      await passportLogin(req, user);
+      if (req.session) req.session.userId = user.id;
 
       return user;
     } catch (error) {

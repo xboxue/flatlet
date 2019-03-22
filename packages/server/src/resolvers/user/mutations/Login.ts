@@ -3,7 +3,6 @@ import { Arg, Ctx, Mutation, Resolver } from 'type-graphql';
 import { getConnection } from 'typeorm';
 import { User } from '../../../entities/User';
 import { Context } from '../../../types/Context';
-import { passportLogin } from '../../../utils/passport';
 
 @Resolver()
 export class Login {
@@ -31,7 +30,7 @@ export class Login {
       throw new Error('Incorrect email or password');
     }
 
-    await passportLogin(req, user);
+    if (req.session) req.session.userId = user.id;
 
     return user;
   }
