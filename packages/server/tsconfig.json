@@ -10,7 +10,11 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "passport-google-token": ["../../@types/passport-google-token"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

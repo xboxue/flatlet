@@ -6,9 +6,8 @@ import passport from 'passport';
 import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { createConnection } from 'typeorm';
-import authRoutes from './routes/auth';
 import { redis } from './shared/redis';
-import { initPassport } from './utils/initPassport';
+import { initPassport } from './utils/passport';
 
 (async () => {
   await createConnection();
@@ -51,8 +50,6 @@ import { initPassport } from './utils/initPassport';
 
   app.use(passport.initialize());
   app.use(passport.session());
-
-  app.use('/auth', authRoutes);
 
   server.applyMiddleware({
     app,

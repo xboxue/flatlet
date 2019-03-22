@@ -2,6 +2,7 @@
   "name": "web",
   "version": "1.0.0",
   "dependencies": {
+    "@flatlet/common": "1.0.0",
     "@zeit/next-typescript": "^1.1.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-client": "^2.5.1",
