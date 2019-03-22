@@ -1,0 +1,11 @@
+{
+  "name": "@flatlet/common",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b"
+  },
+  "devDependencies": {
+    "typescript": "^3.3.3333"
+  }
+}
