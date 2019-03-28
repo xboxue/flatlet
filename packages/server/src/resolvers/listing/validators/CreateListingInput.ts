@@ -29,9 +29,6 @@ export class CreateListingInput {
   @Field({ nullable: true })
   description?: string;
 
-  @Field({ nullable: true })
-  imageUrl?: string;
-
   @Field(type => [String])
   amenities: string[];
 }

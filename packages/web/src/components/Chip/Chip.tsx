@@ -8,14 +8,14 @@ interface Props {
 }
 
 export const Chip = (props: Props) => (
-  <TouchableOpacity onPress={props.onPress}>
+  <TouchableOpacity style={styles.container} onPress={props.onPress}>
     <View
       style={[
         styles.textContainer,
         props.isSelected && { borderColor: 'pink', borderWidth: 0.5 }
       ]}
     >
-      <Text style={[styles.buttonText, props.isSelected && { color: 'pink' }]}>
+      <Text style={[styles.labelText, props.isSelected && { color: 'pink' }]}>
         {props.label}
       </Text>
     </View>
@@ -24,22 +24,19 @@ export const Chip = (props: Props) => (
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-around'
+    marginRight: 5,
+    marginLeft: 5
   },
   textContainer: {
-    borderRadius: 10,
-    padding: 10,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 2
+    borderRadius: 8,
+    paddingTop: 5,
+    paddingBottom: 5,
+    paddingRight: 10,
+    paddingLeft: 10,
+    borderWidth: 1,
+    borderColor: '#E7E7E7'
   },
-  buttonText: {
-    fontSize: 18
+  labelText: {
+    fontSize: 16
   }
 });

@@ -7,23 +7,33 @@ import Document, {
 import React from 'react';
 import { AppRegistry } from 'react-native-web';
 
+const normalizeNextElements = `
+  #__next {
+    display: flex;
+    height: 100%;
+  }
+`;
+
 export default class MyDocument extends Document {
   static async getInitialProps({ renderPage }: NextDocumentContext) {
     AppRegistry.registerComponent('Main', () => Main);
     const { getStyleElement } = AppRegistry.getApplication('Main');
     const page = renderPage();
-    const styles = [getStyleElement()];
+    const styles = [
+      <style dangerouslySetInnerHTML={{ __html: normalizeNextElements }} />,
+      getStyleElement()
+    ];
 
     return { ...page, styles: React.Children.toArray(styles) };
   }
 
   render() {
     return (
-      <html>
+      <html style={{ height: '100%' }}>
         <Head>
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
-        <body>
+        <body style={{ height: '100%' }}>
           <Main />
           <NextScript />
         </body>

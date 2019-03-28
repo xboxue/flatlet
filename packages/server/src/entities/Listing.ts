@@ -2,6 +2,7 @@ import { Field, ID, ObjectType } from 'type-graphql';
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
@@ -55,6 +56,10 @@ export class Listing extends BaseEntity {
   @Field({ nullable: true })
   @Column({ nullable: true })
   description?: string;
+
+  @Field()
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Field(type => [Photo])
   @OneToMany(type => Photo, photo => photo.listing)
