@@ -1,8 +1,6 @@
 {
-  "name": "graphql-server",
+  "name": "@flatlet/api",
   "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
   "dependencies": {
     "@flatlet/common": "1.0.0",
     "apollo-server-express": "2.4.8",

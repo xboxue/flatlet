@@ -1,5 +1,5 @@
 {
-  "name": "web",
+  "name": "@flatlet/web",
   "version": "1.0.0",
   "dependencies": {
     "@flatlet/common": "1.0.0",
