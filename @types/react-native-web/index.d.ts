@@ -1,4 +1,11 @@
 declare module 'react-native-web' {
+  import {
+    AppConfig,
+    ComponentProvider,
+    Runnable,
+    TaskProvider
+  } from 'react-native';
+
   export namespace AppRegistry {
     function registerConfig(config: AppConfig[]): void;
 

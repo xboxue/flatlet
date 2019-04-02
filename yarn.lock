@@ -1806,11 +1806,6 @@ arrify@^1.0.0:
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
   integrity sha1-iYUI2iIm84DfkEcoRWhJwVAaSw0=
 
-art@^0.10.1:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/art/-/art-0.10.3.tgz#b01d84a968ccce6208df55a733838c96caeeaea2"
-  integrity sha512-HXwbdofRTiJT6qZX/FnchtldzJjS3vkLJxQilc3Xj+ma2MXjY4UAyQ0ls1XZYVnDvVIBiFZbC6QsvtW86TD6tQ==
-
 asap@~2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
@@ -6759,18 +6754,6 @@ react-apollo@^2.5.2:
     ts-invariant "^0.3.0"
     tslib "^1.9.3"
 
-react-art@^16.8.4:
-  version "16.8.4"
-  resolved "https://registry.yarnpkg.com/react-art/-/react-art-16.8.4.tgz#9c9afa3d8a78ded11c3328f262ba3495d9efa77e"
-  integrity sha512-f8dH7bWrWE9oFXjjvFf4NnhXSJAjPlGxtKsQyzJEHyDGX8iir1zwtuPamPByybezkGw2pxaSukCu+5ShJH8I6g==
-  dependencies:
-    art "^0.10.1"
-    create-react-class "^15.6.2"
-    loose-envify "^1.1.0"
-    object-assign "^4.1.1"
-    prop-types "^15.6.2"
-    scheduler "^0.13.4"
-
 react-dom@^16.6.3:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.8.3.tgz#ae236029e66210783ac81999d3015dfc475b9c32"
@@ -6806,10 +6789,10 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
 
-react-native-web@^0.10.0-alpha.2:
-  version "0.10.0"
-  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.10.0.tgz#7c67a25d1262f01d462b3a11cc603aef47537d18"
-  integrity sha512-swqplCGSOL1PPFyFf9fnFdLYyFWP9P0tdI5xxmURirjtZH2P+1pF61ApUu5s8Hx8uHDqMXwmVauydXI2sv7tGA==
+react-native-web@^0.11.2:
+  version "0.11.2"
+  resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.11.2.tgz#f3550589347be1f402f0641fefca687ca64a1750"
+  integrity sha512-EVUrBftCZBfUCOrwKJPh+hiGmDieBPL+5m+57BFg0UIH6uSmgvXK9r/xy6rQXLRMTgk3krDd94nRo3/31p69+A==
   dependencies:
     array-find-index "^1.0.2"
     create-react-class "^15.6.2"
