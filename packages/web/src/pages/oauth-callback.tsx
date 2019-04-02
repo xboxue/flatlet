@@ -1,11 +1,14 @@
 import Router, { withRouter } from 'next/router';
 import { useEffect } from 'react';
-import { useLoginFacebook, useLoginGoogle } from 'src/graphql/types';
+import {
+  useLoginFacebookMutation,
+  useLoginGoogleMutation
+} from 'src/graphql/types';
 import { getStringParam } from 'src/utils/getStringParam';
 
 export default withRouter(({ router }) => {
-  const loginFacebook = useLoginFacebook();
-  const loginGoogle = useLoginGoogle();
+  const loginFacebook = useLoginFacebookMutation();
+  const loginGoogle = useLoginGoogleMutation();
 
   const code = getStringParam('code', router);
   const state = getStringParam('state', router);

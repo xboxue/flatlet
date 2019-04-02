@@ -4,14 +4,14 @@ import { LayoutProvider } from 'recyclerlistview';
 import { FeedBar } from 'src/components/FeedBar';
 import { ListingFeed } from 'src/components/ListingFeed';
 import { Map } from 'src/components/Map.web';
-import { useFeed } from 'src/graphql/types';
+import { useFeedQuery } from 'src/graphql/types';
 import { getNumCols } from 'src/utils/getNumCols';
 
 export default () => {
   const [width, setWidth] = useState(0);
   const [isMapHidden, setMapHidden] = useState(false);
 
-  const { data, error, loading } = useFeed();
+  const { data, error, loading } = useFeedQuery();
 
   if (!(data && data.feed && data.feed.length)) return null;
   if (loading) return 'Loading...';

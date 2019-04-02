@@ -1,18 +1,22 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
 import { UploadPhotoButton } from 'src/components/UploadPhotoButton.web';
-import { useListing, useSignedUrl, useUploadPhoto } from 'src/graphql/types';
+import {
+  useListingQuery,
+  useSignedUrlQuery,
+  useUploadPhotoMutation
+} from 'src/graphql/types';
 
 interface Props {
   id: string;
 }
 
 export const UploadPhotoForm = (props: Props) => {
-  const { data, error, loading, refetch: fetchListing } = useListing({
+  const { data, error, loading, refetch: fetchListing } = useListingQuery({
     variables: { id: props.id }
   });
 
-  const { refetch: fetchUrl } = useSignedUrl({ skip: true });
-  const uploadPhoto = useUploadPhoto();
+  const { refetch: fetchUrl } = useSignedUrlQuery({ skip: true });
+  const uploadPhoto = useUploadPhotoMutation();
 
   if (loading) return <Text>Loading...</Text>;
   if (!(data && data.listing) || error) return <Text>Error</Text>;

@@ -1,6 +1,6 @@
 import { FormikActions } from 'formik';
 import { withRouter } from 'next/router';
-import { useCreateListing } from 'src/graphql/types';
+import { useCreateListingMutation } from 'src/graphql/types';
 import { getStringParam } from 'src/utils/getStringParam';
 import { getValidationErrors } from 'src/utils/getValidationErrors';
 import * as Yup from 'yup';
@@ -48,7 +48,7 @@ const BedSchema = Yup.object().shape({
 });
 
 export const ListingForm = withRouter(({ router }) => {
-  const createListing = useCreateListing();
+  const createListing = useCreateListingMutation();
 
   const id = getStringParam('id', router) || '';
 

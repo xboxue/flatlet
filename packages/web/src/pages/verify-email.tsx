@@ -1,5 +1,8 @@
 import { AppContext } from 'next-with-apollo';
-import { VerifyEmailMutation, VerifyEmailVariables } from 'src/graphql/types';
+import {
+  VerifyEmailMutation,
+  VerifyEmailMutationVariables
+} from 'src/graphql/types';
 import { verifyEmailMutation } from 'src/graphql/user/mutations/verifyEmail';
 import { redirect } from 'src/utils/redirect';
 
@@ -13,7 +16,10 @@ VerifyEmail.getInitialProps = async ({
   if (!token) return {};
 
   try {
-    await apolloClient.mutate<VerifyEmailMutation, VerifyEmailVariables>({
+    await apolloClient.mutate<
+      VerifyEmailMutation,
+      VerifyEmailMutationVariables
+    >({
       mutation: verifyEmailMutation,
       variables: { token: token as string }
     });

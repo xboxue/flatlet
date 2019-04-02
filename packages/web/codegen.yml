@@ -4,11 +4,10 @@ documents: 'src/graphql/**/*.ts'
 generates:
   ./src/graphql/types.tsx:
     config:
-      noNamespaces: true
       withHooks: true
-      noComponents: true
-      noHOC: true
+      withHOC: false
+      withComponent: false
     plugins:
-      - 'typescript-common'
-      - 'typescript-client'
+      - 'typescript'
+      - 'typescript-operations'
       - 'typescript-react-apollo'

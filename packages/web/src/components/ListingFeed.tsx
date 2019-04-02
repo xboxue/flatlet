@@ -4,11 +4,11 @@ import {
   LayoutProvider,
   RecyclerListView
 } from 'recyclerlistview';
-import { FeedFeed } from 'src/graphql/types';
+import { FeedQuery } from 'src/graphql/types';
 import { Card } from './Card';
 
 interface Props {
-  data: FeedFeed[];
+  data: FeedQuery['feed'];
   layoutProvider: LayoutProvider;
 }
 

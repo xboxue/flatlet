@@ -1,6 +1,6 @@
 import { Field, Formik, FormikActions } from 'formik';
 import { Button, View } from 'react-native';
-import { useSignup } from 'src/graphql/types';
+import { useSignupMutation } from 'src/graphql/types';
 import { getValidationErrors } from 'src/utils/getValidationErrors';
 import * as Yup from 'yup';
 import { TextField } from './TextField';
@@ -33,7 +33,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export const SignupForm = () => {
-  const signup = useSignup();
+  const signup = useSignupMutation();
 
   const handleSubmit = async (
     values: Values,

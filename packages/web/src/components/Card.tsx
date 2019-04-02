@@ -1,7 +1,7 @@
 import { Image, StyleSheet, Text, View } from 'react-native';
-import { FeedFeed } from 'src/graphql/types';
+import { FeedQuery } from 'src/graphql/types';
 
-export const Card = (props: FeedFeed) => (
+export const Card = (props: FeedQuery['feed'][0]) => (
   <View style={styles.container}>
     <Image
       style={styles.photo}
