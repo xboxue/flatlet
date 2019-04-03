@@ -1,10 +1,10 @@
 import { AppContext } from 'next-with-apollo';
-import Router from 'next/router';
-import { Component, ComponentType } from 'react';
+import { Component } from 'react';
 import { MeQuery } from 'src/graphql/types';
 import { meQuery } from 'src/graphql/user/queries/me';
+import { redirect } from './redirect';
 
-export function withAuth<P>(WrappedComponent: ComponentType<P>) {
+export function withAuth<P>(WrappedComponent: React.ComponentType<P>) {
   return class extends Component<P> {
     static async getInitialProps({ res, apolloClient }: AppContext) {
       const response = await apolloClient.query<MeQuery>({ query: meQuery });
@@ -12,12 +12,7 @@ export function withAuth<P>(WrappedComponent: ComponentType<P>) {
         return { me: response.data.me };
       }
 
-      if (res) {
-        res.writeHead(302, { Location: '/login' });
-        res.end();
-      } else {
-        Router.push('/login');
-      }
+      redirect('/login', res);
       return {};
     }
 

@@ -1,7 +1,7 @@
 import { AppContext } from 'next-with-apollo';
-import Router from 'next/router';
 import { VerifyEmailMutation, VerifyEmailVariables } from 'src/graphql/types';
 import { verifyEmailMutation } from 'src/graphql/user/mutations/verifyEmail';
+import { redirect } from 'src/utils/redirect';
 
 const VerifyEmail = () => null;
 
@@ -21,13 +21,7 @@ VerifyEmail.getInitialProps = async ({
     throw error;
   }
 
-  if (res) {
-    res.writeHead(303, { Location: '/login' });
-    res.end();
-  } else {
-    Router.push('/login');
-  }
-
+  redirect('/login', res);
   return {};
 };
 

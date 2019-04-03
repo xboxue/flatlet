@@ -1,7 +1,7 @@
 import { FormikActions } from 'formik';
 import { withRouter } from 'next/router';
-import React from 'react';
 import { useCreateListing } from 'src/graphql/types';
+import { getStringParam } from 'src/utils/getStringParam';
 import { getValidationErrors } from 'src/utils/getValidationErrors';
 import * as Yup from 'yup';
 import { AmenitiesForm } from './AmenitiesForm';
@@ -50,10 +50,7 @@ const BedSchema = Yup.object().shape({
 export const ListingForm = withRouter(({ router }) => {
   const createListing = useCreateListing();
 
-  const id =
-    router && router.query && router.query.id
-      ? (router.query.id as string)
-      : '';
+  const id = getStringParam('id', router) || '';
 
   const handleSubmit = async (
     { bedrooms, bathrooms, sqft, price, ...rest }: Values,
